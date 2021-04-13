@@ -1,0 +1,52 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+    <div class="columns">
+        <div class="column is-6 tablet">
+            <p class="subtitle">Por favor, insira uma lista de números separados por vírgula(,)</p>
+            <br>
+            <form>
+                <div class="field">
+                    <label class="label">Insira Aqui:</label>
+                    <label>
+                        <input class="input" type="text" placeholder="Números." name="number-list"
+                               value={{ numbers_raw }}>
+                    </label>
+                </div>
+
+                <div class="field is-grouped">
+                    {% for type in types %}
+                        <div class="control">
+                            <button class="button is-link is-light"
+                                    name={{ type.get_location }}>{{ type.get_name }}</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </form>
+            {% if errors == True %}
+                <h2 class="has-text-warning">Erro ao ler input. Por favor revise.</h2>
+            {% endif %}
+        </div>
+        <div class="column">
+
+            {% for line in output %}
+                <p>{{ line }} <p/>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+    {% for post in posts %}
+        <div class="post block">
+            <h2 class="subtitle">{{ post.title }}</h2>
+
+            <small>Posted at {{ post.date_added }}</small>
+
+            <p>{{ post.intro }}</p>
+
+            <a href="{% url 'post_detail' post.slug %}">Read More</a>
+        </div>
+    {% endfor %}
+{% endblock %}
+
